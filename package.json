@@ -1,0 +1,10 @@
+{
+  "name": "tori-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tori — landing page",
+  "scripts": {
+    "dev": "npx --yes serve . -l 3000",
+    "start": "npx --yes serve . -l 3000"
+  }
+}
