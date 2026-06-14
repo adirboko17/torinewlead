@@ -160,12 +160,57 @@
     });
   }
 
+  // ---- Meta Pixel: engagement events ----
+  function fbTrack(event, params) {
+    if (typeof fbq === 'function') fbq('track', event, params || {});
+  }
+  function fbTrackCustom(event, params) {
+    if (typeof fbq === 'function') fbq('trackCustom', event, params || {});
+  }
+
   // ---- lead form fake submit ----
   const form = document.getElementById('lead-form-el');
   if (form) {
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
       form.closest('.form-card').classList.add('sent');
+      fbTrack('Lead', {
+        content_name: 'Tori Landing Form',
+        content_category: document.getElementById('f-type')?.value || '',
+        currency: 'ILS',
+        value: 249
+      });
+    });
+  }
+
+  document.querySelector('.wa-float')?.addEventListener('click', () => {
+    fbTrack('Contact', { content_name: 'WhatsApp' });
+  });
+
+  document.querySelectorAll('a[href="#lead-form"]').forEach((a) => {
+    a.addEventListener('click', () => {
+      fbTrackCustom('ClickCTA', {
+        button_text: a.textContent.replace(/\s+/g, ' ').trim().slice(0, 60),
+        location: a.closest('[data-screen-label]')?.dataset.screenLabel || 'nav'
+      });
+    });
+  });
+
+  const pixelViews = [
+    { el: document.getElementById('lead-form'), name: 'Lead Form' },
+    { el: document.getElementById('pricing'), name: 'Pricing' }
+  ].filter((s) => s.el);
+  if (pixelViews.length) {
+    const viewIo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        fbTrack('ViewContent', { content_name: e.target.dataset.pixelContent });
+        viewIo.unobserve(e.target);
+      });
+    }, { threshold: 0.45 });
+    pixelViews.forEach(({ el, name }) => {
+      el.dataset.pixelContent = name;
+      viewIo.observe(el);
     });
   }
 })();
