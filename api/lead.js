@@ -30,33 +30,17 @@ function formatIsraeliPhone(value) {
 }
 
 function buildLeadEmailHtml(fields) {
-  const rows = [
-    { label: 'שם מלא', value: fields.name, highlight: true },
-    { label: 'שם העסק', value: fields.business },
-    { label: 'טלפון', value: fields.phone, link: `tel:${fields.phoneRaw}` },
-    { label: 'סוג עסק', value: fields.type },
-    { label: 'הערות', value: fields.notes },
-  ];
-
-  const rowHtml = rows.map(({ label, value, highlight, link }) => {
-    const valueCell = link
+  const line = (label, value, { link, accent } = {}) => {
+    const valueHtml = link
       ? `<a href="${link}" style="color:#F77B00;text-decoration:none;font-weight:700">${value}</a>`
-      : `<span style="color:#1F1810;font-size:16px;font-weight:${highlight ? '700' : '600'}">${value}</span>`;
+      : `<span style="color:${accent ? '#F77B00' : '#1F1810'};font-weight:700">${value}</span>`;
 
     return `
-      <tr>
-        <td style="padding:14px 18px;border-bottom:1px solid #F0E4D4;background:#FFFCF7">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-            <tr>
-              <td style="font-size:13px;color:#8A7358;font-weight:700;padding-bottom:4px">${label}</td>
-            </tr>
-            <tr>
-              <td>${valueCell}</td>
-            </tr>
-          </table>
-        </td>
-      </tr>`;
-  }).join('');
+      <div style="margin:0 0 8px;font-size:15px;line-height:1.5;text-align:right;direction:rtl">
+        <span style="color:#8A7358;font-weight:700">${label}:</span>
+        ${valueHtml}
+      </div>`;
+  };
 
   const sentAt = new Intl.DateTimeFormat('he-IL', {
     dateStyle: 'medium',
@@ -64,52 +48,50 @@ function buildLeadEmailHtml(fields) {
     timeZone: 'Asia/Jerusalem',
   }).format(new Date());
 
+  const details = [
+    line('שם', fields.name),
+    line('עסק', fields.business),
+    line('טלפון', fields.phone, { link: `tel:${fields.phoneRaw}`, accent: true }),
+    line('סוג עסק', fields.type),
+    fields.notes !== '—' ? line('הערות', fields.notes) : '',
+  ].join('');
+
+  const firstName = fields.name.split(' ')[0];
+
   return `<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ליד חדש מ-Tori</title>
+  <title>ליד חדש - Tori</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap');
+  </style>
 </head>
-<body style="margin:0;padding:0;background:#F4E8D7;font-family:Arial,Helvetica,sans-serif">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F4E8D7;padding:32px 16px">
+<body style="margin:0;padding:0;background:#F4E8D7;font-family:'Assistant',Arial,Helvetica,sans-serif;direction:rtl">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" dir="rtl" style="background:#F4E8D7;padding:24px 16px;font-family:'Assistant',Arial,Helvetica,sans-serif">
     <tr>
-      <td align="center">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;background:#FFFFFF;border-radius:20px;overflow:hidden;border:1px solid #EDD9C0;box-shadow:0 10px 30px rgba(31,24,16,0.08)">
+      <td align="right">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" dir="rtl" style="max-width:460px;margin-right:0;margin-left:auto;background:#FFFFFF;border-radius:16px;overflow:hidden;border:1px solid #EDD9C0;box-shadow:0 8px 24px rgba(31,24,16,0.08);font-family:'Assistant',Arial,Helvetica,sans-serif">
           <tr>
-            <td style="background:linear-gradient(135deg,#FF8C1A 0%,#F77B00 100%);padding:28px 24px;text-align:center">
-              <div style="font-size:12px;letter-spacing:0.08em;color:rgba(255,255,255,0.85);font-weight:700;margin-bottom:8px">TORI LEADS</div>
-              <div style="font-size:28px;line-height:1.2;color:#FFFFFF;font-weight:800">ליד חדש 🎯</div>
-              <div style="font-size:14px;color:rgba(255,255,255,0.92);margin-top:8px">מישהו השאיר פרטים בדף הנחיתה</div>
+            <td dir="rtl" align="right" style="background:linear-gradient(135deg,#FF8C1A 0%,#F77B00 100%);padding:18px 20px;text-align:right;font-family:'Assistant',Arial,Helvetica,sans-serif">
+              <div style="font-size:11px;letter-spacing:0.06em;color:rgba(255,255,255,0.88);font-weight:700;margin-bottom:4px">TORI</div>
+              <div style="font-size:24px;line-height:1.2;color:#FFFFFF;font-weight:800">ליד חדש 🎯</div>
             </td>
           </tr>
           <tr>
-            <td style="padding:22px 24px 8px">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FFF7EC;border:1px solid #FFDDB3;border-radius:14px">
-                <tr>
-                  <td style="padding:16px 18px">
-                    <div style="font-size:13px;color:#8A7358;font-weight:700;margin-bottom:4px">ליד מ-${fields.name}</div>
-                    <div style="font-size:22px;line-height:1.3;color:#1F1810;font-weight:800">${fields.business}</div>
-                  </td>
-                </tr>
-              </table>
+            <td dir="rtl" align="right" style="padding:18px 20px 10px;text-align:right;font-family:'Assistant',Arial,Helvetica,sans-serif">
+              ${details}
             </td>
           </tr>
           <tr>
-            <td style="padding:8px 24px 0">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #F0E4D4;border-radius:14px;overflow:hidden">
-                ${rowHtml}
-              </table>
+            <td dir="rtl" align="right" style="padding:4px 20px 18px;text-align:right">
+              <a href="tel:${fields.phoneRaw}" style="display:inline-block;background:#FF8C1A;color:#1F1810;text-decoration:none;font-family:'Assistant',Arial,Helvetica,sans-serif;font-size:15px;font-weight:800;padding:11px 20px;border-radius:999px">📞 חזרה ל-${firstName}</a>
             </td>
           </tr>
           <tr>
-            <td align="center" style="padding:24px">
-              <a href="tel:${fields.phoneRaw}" style="display:inline-block;background:#FF8C1A;color:#1F1810;text-decoration:none;font-size:16px;font-weight:800;padding:14px 28px;border-radius:999px">📞 חזרה ל-${fields.name.split(' ')[0]}</a>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:0 24px 24px;text-align:center">
-              <div style="font-size:12px;color:#8A7358;line-height:1.6">נשלח אוטומטית מ-Tori · ${sentAt}</div>
+            <td dir="rtl" align="right" style="padding:0 20px 16px;text-align:right">
+              <div style="font-size:11px;color:#8A7358;line-height:1.5;font-family:'Assistant',Arial,Helvetica,sans-serif">${sentAt}</div>
             </td>
           </tr>
         </table>
