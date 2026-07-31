@@ -224,6 +224,62 @@
     if (typeof fbq === 'function') fbq('trackCustom', event, params || {});
   }
 
+  function normalizeIsraeliPhone(value) {
+    let digits = String(value || '').replace(/\D/g, '');
+    if (digits.startsWith('972')) digits = '0' + digits.slice(3);
+    else if (digits.length === 9 && digits.startsWith('5')) digits = '0' + digits;
+    return digits;
+  }
+
+  function isValidIsraeliPhone(value) {
+    const digits = normalizeIsraeliPhone(value);
+    if (/^05[0-9]{8}$/.test(digits)) return true;
+    if (/^0[234589][0-9]{7,8}$/.test(digits)) return true;
+    if (/^07[0-9]{8}$/.test(digits)) return true;
+    return false;
+  }
+
+  function formatIsraeliPhone(value) {
+    const digits = normalizeIsraeliPhone(value);
+    if (/^05[0-9]{8}$/.test(digits)) return digits.slice(0, 3) + '-' + digits.slice(3);
+    if (/^0[234589][0-9]{7,8}$/.test(digits)) return digits.slice(0, 2) + '-' + digits.slice(2);
+    if (/^07[0-9]{8}$/.test(digits)) return digits.slice(0, 3) + '-' + digits.slice(3);
+    return value.trim();
+  }
+
+  function setPhoneFieldError(show) {
+    const field = document.getElementById('f-phone-field');
+    const input = document.getElementById('f-phone');
+    const error = document.getElementById('f-phone-error');
+    if (!field || !input || !error) return false;
+
+    field.classList.toggle('invalid', show);
+    input.setAttribute('aria-invalid', show ? 'true' : 'false');
+    error.hidden = !show;
+    if (show) input.focus();
+    return show;
+  }
+
+  const phoneInput = document.getElementById('f-phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', () => {
+      if (isValidIsraeliPhone(phoneInput.value)) setPhoneFieldError(false);
+    });
+    phoneInput.addEventListener('blur', () => {
+      const value = phoneInput.value.trim();
+      if (!value) {
+        setPhoneFieldError(false);
+        return;
+      }
+      if (!isValidIsraeliPhone(value)) {
+        setPhoneFieldError(true);
+        return;
+      }
+      phoneInput.value = formatIsraeliPhone(value);
+      setPhoneFieldError(false);
+    });
+  }
+
   // ---- lead form → /api/lead (Vercel + Resend) ----
   const form = document.getElementById('lead-form-el');
   if (form) {
@@ -232,10 +288,21 @@
 
       const card = form.closest('.form-card');
       const btn = form.querySelector('button[type="submit"]');
+      const phoneEl = document.getElementById('f-phone');
+      const phoneValue = phoneEl?.value?.trim() || '';
+
+      if (!isValidIsraeliPhone(phoneValue)) {
+        setPhoneFieldError(true);
+        return;
+      }
+
+      const formattedPhone = formatIsraeliPhone(phoneValue);
+      if (phoneEl) phoneEl.value = formattedPhone;
+
       const payload = {
         name: document.getElementById('f-name')?.value?.trim() || '',
         business: document.getElementById('f-biz')?.value?.trim() || '',
-        phone: document.getElementById('f-phone')?.value?.trim() || '',
+        phone: formattedPhone,
         type: document.getElementById('f-type')?.value || '',
         notes: document.getElementById('f-notes')?.value?.trim() || '',
       };
@@ -252,7 +319,13 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
-        if (!res.ok) throw new Error('send failed');
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          if (res.status === 400 && data.error === 'Invalid phone number') {
+            setPhoneFieldError(true);
+          }
+          throw new Error('send failed');
+        }
 
         card.classList.add('sent');
         fbTrack('Lead', {

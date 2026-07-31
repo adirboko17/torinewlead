@@ -305,7 +305,11 @@ alt="" /></noscript>
         <div class="form-grid">
           <div class="field"><label for="f-name">שם מלא</label><input id="f-name" type="text" required="required" placeholder="ישראל ישראלי" /></div>
           <div class="field"><label for="f-biz">שם העסק</label><input id="f-biz" type="text" required="required" placeholder="הסטודיו של ישראל" /></div>
-          <div class="field"><label for="f-phone">טלפון</label><input id="f-phone" type="tel" required="required" placeholder="050-0000000" /></div>
+          <div class="field" id="f-phone-field">
+            <label for="f-phone">טלפון</label>
+            <input id="f-phone" type="tel" name="phone" required="required" inputmode="tel" autocomplete="tel" placeholder="050-1234567" aria-describedby="f-phone-error" />
+            <span class="field-error" id="f-phone-error" role="alert" hidden="">נא להזין מספר טלפון ישראלי תקין (למשל 050-1234567)</span>
+          </div>
           <div class="field">
             <label for="f-type">סוג עסק</label>
             <select id="f-type" required="required">
