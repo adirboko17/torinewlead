@@ -740,6 +740,7 @@ details.faq .faq-body { padding: 0 26px 24px; color: var(--text-dim); font-size:
 .field { display: grid; gap: 7px; }
 .field.full { grid-column: 1 / -1; }
 .field label { font-weight: 700; font-size: 15px; color: var(--text-dim); }
+.field label .req { color: var(--accent); font-weight: 800; margin-inline-start: 2px; }
 .field input, .field select, .field textarea {
   font-family: var(--font-body);
   font-size: 17px;

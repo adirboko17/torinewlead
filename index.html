@@ -303,15 +303,15 @@ alt="" /></noscript>
       <p class="form-sub">מלאו פרטים ונחזור אליכם תוך שעה לשיחת היכרות קצרה.</p>
       <form id="lead-form-el">
         <div class="form-grid">
-          <div class="field"><label for="f-name">שם מלא</label><input id="f-name" type="text" required="required" placeholder="ישראל ישראלי" /></div>
-          <div class="field"><label for="f-biz">שם העסק</label><input id="f-biz" type="text" required="required" placeholder="הסטודיו של ישראל" /></div>
+          <div class="field"><label for="f-name">שם מלא <span class="req" aria-hidden="true">*</span></label><input id="f-name" type="text" required="required" placeholder="ישראל ישראלי" /></div>
+          <div class="field"><label for="f-biz">שם העסק <span class="req" aria-hidden="true">*</span></label><input id="f-biz" type="text" required="required" placeholder="הסטודיו של ישראל" /></div>
           <div class="field" id="f-phone-field">
-            <label for="f-phone">טלפון</label>
+            <label for="f-phone">טלפון <span class="req" aria-hidden="true">*</span></label>
             <input id="f-phone" type="tel" name="phone" required="required" inputmode="tel" autocomplete="tel" placeholder="050-1234567" aria-describedby="f-phone-error" />
             <span class="field-error" id="f-phone-error" role="alert" hidden="">נא להזין מספר טלפון ישראלי תקין (למשל 050-1234567)</span>
           </div>
           <div class="field">
-            <label for="f-type">סוג עסק</label>
+            <label for="f-type">סוג עסק <span class="req" aria-hidden="true">*</span></label>
             <select id="f-type" required="required">
               <option value="" selected="selected" disabled="disabled">בחר/י סוג עסק</option>
               <option>מספרה / ברבר</option>
