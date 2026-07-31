@@ -160,6 +160,62 @@
     });
   }
 
+  // ---- legal modals (terms / privacy / accessibility) ----
+  const legalModal = document.getElementById('legal-modal');
+  const legalTitle = document.getElementById('legal-modal-title');
+  const legalBody = document.getElementById('legal-modal-body');
+  const legalDocs = window.TORI_LEGAL || {};
+  let legalLastFocus = null;
+
+  function openLegalModal(key) {
+    const doc = legalDocs[key];
+    if (!legalModal || !doc) return;
+    legalLastFocus = document.activeElement;
+    legalTitle.textContent = doc.title;
+    legalBody.innerHTML = doc.html;
+    legalBody.querySelectorAll('[data-legal-open]').forEach((link) => {
+      link.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        openLegalModal(link.dataset.legalOpen);
+      });
+    });
+    legalModal.hidden = false;
+    legalModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('legal-open');
+    requestAnimationFrame(() => legalModal.classList.add('open'));
+    legalModal.querySelector('.legal-modal-close')?.focus();
+  }
+
+  function closeLegalModal() {
+    if (!legalModal) return;
+    legalModal.classList.remove('open');
+    legalModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('legal-open');
+    window.setTimeout(() => {
+      if (!legalModal.classList.contains('open')) {
+        legalModal.hidden = true;
+        legalBody.innerHTML = '';
+      }
+    }, 320);
+    legalLastFocus?.focus?.();
+    legalLastFocus = null;
+  }
+
+  document.querySelectorAll('[data-legal]').forEach((link) => {
+    link.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      openLegalModal(link.dataset.legal);
+    });
+  });
+
+  legalModal?.addEventListener('click', (ev) => {
+    if (ev.target.closest('[data-legal-close]')) closeLegalModal();
+  });
+
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && legalModal && !legalModal.hidden) closeLegalModal();
+  });
+
   // ---- Meta Pixel: engagement events ----
   function fbTrack(event, params) {
     if (typeof fbq === 'function') fbq('track', event, params || {});
