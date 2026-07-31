@@ -68,11 +68,11 @@ function buildLeadEmailHtml(fields) {
     @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap');
   </style>
 </head>
-<body style="margin:0;padding:0;background:#F4E8D7;font-family:'Assistant',Arial,Helvetica,sans-serif;direction:rtl">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" dir="rtl" style="background:#F4E8D7;padding:24px 16px;font-family:'Assistant',Arial,Helvetica,sans-serif">
+<body style="margin:0;padding:0;background:#F4E8D7;font-family:'Assistant',Arial,Helvetica,sans-serif">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F4E8D7;padding:24px 16px;font-family:'Assistant',Arial,Helvetica,sans-serif">
     <tr>
-      <td align="right">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" dir="rtl" style="max-width:460px;margin-right:0;margin-left:auto;background:#FFFFFF;border-radius:16px;overflow:hidden;border:1px solid #EDD9C0;box-shadow:0 8px 24px rgba(31,24,16,0.08);font-family:'Assistant',Arial,Helvetica,sans-serif">
+      <td align="center">
+        <table role="presentation" width="460" cellpadding="0" cellspacing="0" border="0" dir="rtl" style="width:100%;max-width:460px;margin:0 auto;background:#FFFFFF;border-radius:16px;overflow:hidden;border:1px solid #EDD9C0;box-shadow:0 8px 24px rgba(31,24,16,0.08);font-family:'Assistant',Arial,Helvetica,sans-serif">
           <tr>
             <td dir="rtl" align="right" style="background:linear-gradient(135deg,#FF8C1A 0%,#F77B00 100%);padding:18px 20px;text-align:right;font-family:'Assistant',Arial,Helvetica,sans-serif">
               <div style="font-size:11px;letter-spacing:0.06em;color:rgba(255,255,255,0.88);font-weight:700;margin-bottom:4px">TORI</div>
