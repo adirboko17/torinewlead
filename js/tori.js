@@ -224,18 +224,50 @@
     if (typeof fbq === 'function') fbq('trackCustom', event, params || {});
   }
 
-  // ---- lead form fake submit ----
+  // ---- lead form → /api/lead (Vercel + Resend) ----
   const form = document.getElementById('lead-form-el');
   if (form) {
-    form.addEventListener('submit', (ev) => {
+    form.addEventListener('submit', async (ev) => {
       ev.preventDefault();
-      form.closest('.form-card').classList.add('sent');
-      fbTrack('Lead', {
-        content_name: 'Tori Landing Form',
-        content_category: document.getElementById('f-type')?.value || '',
-        currency: 'ILS',
-        value: 249
-      });
+
+      const card = form.closest('.form-card');
+      const btn = form.querySelector('button[type="submit"]');
+      const payload = {
+        name: document.getElementById('f-name')?.value?.trim() || '',
+        business: document.getElementById('f-biz')?.value?.trim() || '',
+        phone: document.getElementById('f-phone')?.value?.trim() || '',
+        type: document.getElementById('f-type')?.value || '',
+        notes: document.getElementById('f-notes')?.value?.trim() || '',
+      };
+
+      if (btn) {
+        btn.disabled = true;
+        btn.dataset.originalHtml = btn.innerHTML;
+        btn.textContent = 'שולח...';
+      }
+
+      try {
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error('send failed');
+
+        card.classList.add('sent');
+        fbTrack('Lead', {
+          content_name: 'Tori Landing Form',
+          content_category: payload.type,
+          currency: 'ILS',
+          value: 249
+        });
+      } catch (err) {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = btn.dataset.originalHtml || 'שליחת פרטים <span class="arrow">←</span>';
+        }
+        window.alert('לא הצלחנו לשלוח את הפרטים. נסו שוב או צרו קשר בוואטסאפ.');
+      }
     });
   }
 
