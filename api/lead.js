@@ -114,6 +114,72 @@ function buildLeadEmailText(fields) {
   ].join('\n');
 }
 
+const DEFAULT_SUPABASE_URL = 'https://bzjtthjcfngzpopqgzcr.supabase.co';
+
+function getSupabaseConfig() {
+  const supabaseUrl = (process.env.SUPABASE_URL || DEFAULT_SUPABASE_URL).trim();
+  const serviceKey = process.env.SUPABASE_SERVICE_KEY?.trim() || '';
+  return { supabaseUrl, serviceKey };
+}
+
+async function insertLeadToSupabase(lead) {
+  const { supabaseUrl, serviceKey } = getSupabaseConfig();
+  const row = {
+    name: lead.name,
+    business: lead.business,
+    phone: lead.phone,
+    business_type: lead.business_type,
+    source: 'landing-page',
+  };
+
+  if (!serviceKey) {
+    console.error('[lead] Supabase insert skipped: SUPABASE_SERVICE_KEY is missing in env');
+    return { ok: false, skipped: true, reason: 'missing_service_key' };
+  }
+
+  const endpoint = `${supabaseUrl.replace(/\/$/, '')}/rest/v1/leads`;
+  console.log('[lead] Supabase insert start', {
+    endpoint,
+    hasUrl: Boolean(supabaseUrl),
+    hasServiceKey: true,
+    row,
+  });
+
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify(row),
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      const message = errText || `HTTP ${response.status}`;
+      console.error('[lead] Supabase insert failed:', {
+        status: response.status,
+        message,
+        row,
+      });
+      return { ok: false, status: response.status, message };
+    }
+
+    console.log('[lead] Supabase insert success', { status: response.status, row });
+    return { ok: true, status: response.status };
+  } catch (err) {
+    console.error('[lead] Supabase insert failed:', {
+      message: err?.message || String(err),
+      name: err?.name,
+      row,
+    });
+    return { ok: false, message: err?.message || String(err) };
+  }
+}
+
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -167,6 +233,17 @@ module.exports = async (req, res) => {
 
   const html = buildLeadEmailHtml(fields);
   const text = buildLeadEmailText(fields);
+
+  const supabaseResult = await insertLeadToSupabase({
+    name: fields.nameRaw,
+    business: fields.businessRaw,
+    phone: fields.phoneRaw,
+    business_type: fields.typeRaw,
+  });
+
+  if (!supabaseResult.ok) {
+    console.error('[lead] Continuing to Resend despite Supabase failure', supabaseResult);
+  }
 
   try {
     const response = await fetch('https://api.resend.com/emails', {
