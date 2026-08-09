@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#161009" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>מחיקת חשבון | Tori</title>
+<meta name="description" content="בקשה למחיקת חשבון ומידע מאפליקציות המופעלות באמצעות Tori." />
+<link rel="canonical" href="https://wetori.co.il/delete-account" />
+<link rel="icon" href="../assets/favicon2.png" type="image/png" />
+<link rel="apple-touch-icon" href="../assets/favicon2.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&amp;family=Secular+One&amp;family=Suez+One&amp;family=Rubik:wght@700;800&amp;display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tori.css" />
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav" data-screen-label="ניווט">
+  <div class="container nav-inner">
+    <a class="nav-logo" href="/"><img src="../assets/tori-logo.png" alt="Tori" /></a>
+    <div class="nav-links" id="nav-menu">
+      <a href="/#pain">למה טורי</a>
+      <a href="/#process">איך זה עובד</a>
+      <a href="/#features">פיצ'רים</a>
+      <a href="/#pricing">מחיר</a>
+      <a href="/#faq">שאלות</a>
+      <a class="btn btn-primary menu-cta" href="/#lead-form">התחילו עכשיו</a>
+    </div>
+    <a class="btn btn-primary" href="/#lead-form">התחילו עכשיו</a>
+    <button class="nav-burger" type="button" aria-label="תפריט" aria-expanded="false" aria-controls="nav-menu">
+      <span class="bars"><span></span><span></span><span></span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===================== DELETE ACCOUNT ===================== -->
+<main class="delete-page section" id="top">
+  <div class="container">
+    <div class="section-head delete-head">
+      <h1>מחיקת חשבון ומידע</h1>
+      <p class="delete-intro">אם יש לכם חשבון באחת מהאפליקציות המופעלות באמצעות Tori, תוכלו לבקש למחוק את החשבון שלכם ואת המידע המשויך אליו.</p>
+      <p class="delete-intro">ניתן למחוק חשבון גם ישירות מתוך האפליקציה: <strong>פרופיל אישי → מחיקת חשבון</strong>.</p>
+      <p class="delete-intro">אם אין לכם יותר גישה לאפליקציה, ניתן לשלוח בקשת מחיקה באמצעות הטופס בעמוד זה.</p>
+    </div>
+
+    <div class="form-card delete-form-card">
+      <h3>בקשת מחיקה</h3>
+      <p class="form-sub">מלאו את הפרטים ונטפל בבקשה לאחר אימות.</p>
+      <form id="delete-account-form" novalidate>
+        <div class="form-grid">
+          <div class="field full">
+            <label for="da-name">שם מלא <span class="req" aria-hidden="true">*</span></label>
+            <input id="da-name" name="name" type="text" required autocomplete="name" placeholder="ישראל ישראלי" />
+          </div>
+          <div class="field full" id="da-phone-field">
+            <label for="da-phone">מספר הטלפון המשויך לחשבון <span class="req" aria-hidden="true">*</span></label>
+            <input id="da-phone" name="phone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="050-1234567" aria-describedby="da-phone-error" />
+            <span class="field-error" id="da-phone-error" role="alert" hidden>נא להזין מספר טלפון ישראלי תקין (למשל 050-1234567)</span>
+          </div>
+          <div class="field full">
+            <label for="da-app">שם העסק / האפליקציה שבה השתמשתי <span class="req" aria-hidden="true">*</span></label>
+            <input id="da-app" name="app" type="text" required placeholder="שם העסק או האפליקציה" />
+          </div>
+          <div class="field full">
+            <label for="da-notes">הערה (אופציונלי)</label>
+            <textarea id="da-notes" name="notes" placeholder="פרטים נוספים שיעזרו לנו לזהות את החשבון..."></textarea>
+          </div>
+          <div class="field full field-check">
+            <label class="check-label">
+              <input id="da-confirm" name="confirm" type="checkbox" required />
+              <span>אני מבקש/ת למחוק את החשבון ואת המידע המשויך אליו. <span class="req" aria-hidden="true">*</span></span>
+            </label>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">שליחת בקשת מחיקה</button>
+      </form>
+      <div class="form-success">
+        <div class="big-check">✓</div>
+        <h3>הבקשה התקבלה</h3>
+        <p class="form-sub">הבקשה התקבלה. צוות Tori יטפל בבקשת המחיקה לאחר אימות הפרטים.</p>
+      </div>
+    </div>
+
+    <section class="delete-info" aria-labelledby="delete-what-title">
+      <h2 id="delete-what-title">מה נמחק?</h2>
+      <p>בעת מחיקת החשבון יימחק המידע האישי המשויך לחשבון ככל שאינו נדרש להישמר לצורך חובה חוקית, אבטחה או מניעת הונאה.</p>
+      <p>המידע עשוי לכלול:</p>
+      <ul>
+        <li>שם</li>
+        <li>מספר טלפון</li>
+        <li>מזהה משתמש</li>
+        <li>פרטי חשבון</li>
+        <li>מידע הקשור לתורים</li>
+        <li>Push Token ומזהים טכניים המשויכים לחשבון</li>
+      </ul>
+      <p class="delete-links">
+        מדיניות פרטיות:
+        <a href="https://wetori.co.il/app-privacy">https://wetori.co.il/app-privacy</a>
+      </p>
+      <p class="delete-links">
+        תמיכה:
+        <a href="https://wetori.co.il/support">https://wetori.co.il/support</a>
+      </p>
+    </section>
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer" data-screen-label="פוטר">
+  <div class="container footer-inner">
+    <a href="/"><img src="../assets/tori-logo.png" alt="Tori" /></a>
+    <div class="footer-links">
+      <a href="#" data-legal="terms">תנאי שימוש</a>
+      <a href="#" data-legal="privacy">מדיניות פרטיות</a>
+      <a href="#" data-legal="accessibility">הצהרת נגישות</a>
+    </div>
+    <p class="copy">כל הזכויות שמורות ל־Tori © 2026</p>
+  </div>
+</footer>
+
+<!-- accessibility widget -->
+<div class="a11y-widget" id="a11y-widget">
+  <div class="a11y-panel" id="a11y-panel" hidden role="region" aria-label="הגדרות נגישות">
+    <div class="a11y-panel-head">
+      <strong>נגישות</strong>
+      <button type="button" class="a11y-panel-close" aria-label="סגירת תפריט נגישות">×</button>
+    </div>
+    <div class="a11y-panel-body">
+      <div class="a11y-row">
+        <div class="a11y-row-text">
+          <span class="a11y-row-label">גודל טקסט</span>
+          <span class="a11y-row-value" data-a11y-font-label>רגיל</span>
+        </div>
+        <div class="a11y-row-actions">
+          <button type="button" class="a11y-mini-btn" data-a11y="font-down" aria-label="הקטנת טקסט">−</button>
+          <button type="button" class="a11y-mini-btn" data-a11y="font-up" aria-label="הגדלת טקסט">+</button>
+        </div>
+      </div>
+      <button type="button" class="a11y-btn" data-a11y="contrast" aria-pressed="false">
+        <span class="a11y-btn-icon" aria-hidden="true">◐</span>
+        <span>ניגודיות גבוהה</span>
+      </button>
+      <button type="button" class="a11y-btn" data-a11y="links" aria-pressed="false">
+        <span class="a11y-btn-icon" aria-hidden="true">🔗</span>
+        <span>הדגשת קישורים</span>
+      </button>
+      <button type="button" class="a11y-btn" data-a11y="readable" aria-pressed="false">
+        <span class="a11y-btn-icon" aria-hidden="true">Aa</span>
+        <span>גופן קריא</span>
+      </button>
+      <button type="button" class="a11y-btn" data-a11y="spacing" aria-pressed="false">
+        <span class="a11y-btn-icon" aria-hidden="true">↔</span>
+        <span>ריווח טקסט</span>
+      </button>
+      <button type="button" class="a11y-btn" data-a11y="motion" aria-pressed="false">
+        <span class="a11y-btn-icon" aria-hidden="true">⏸</span>
+        <span>עצירת אנימציות</span>
+      </button>
+      <button type="button" class="a11y-btn a11y-reset" data-a11y="reset">איפוס הגדרות</button>
+    </div>
+  </div>
+  <button type="button" class="a11y-toggle" id="a11y-toggle" aria-expanded="false" aria-controls="a11y-panel" aria-label="פתיחת תפריט נגישות">
+    <img src="../assets/accessibility.png" width="30" height="30" alt="" aria-hidden="true" />
+  </button>
+</div>
+
+<a class="wa-float" href="https://wa.me/972535575303?text=%D7%A9%D7%9C%D7%95%D7%9D%2C%20%D7%90%D7%A0%D7%99%20%D7%A6%D7%A8%D7%99%D7%9A%20%D7%A2%D7%96%D7%A8%D7%94%20%D7%91%D7%90%D7%A4%D7%9C%D7%99%D7%A7%D7%A6%D7%99%D7%94" target="_blank" rel="noopener" aria-label="וואטסאפ">
+  <svg viewBox="0 0 32 32"><path d="M16.04 3C9.4 3 4 8.36 4 14.96c0 2.1.56 4.16 1.62 5.98L4 29l8.26-1.58a12.1 12.1 0 0 0 3.78.6C22.68 28.02 28 22.66 28 16.04 28 8.36 22.66 3 16.04 3zm0 22.8c-1.2 0-2.38-.2-3.5-.6l-.5-.18-4.9.94 1-4.76-.22-.5a9.8 9.8 0 0 1-1.52-5.24c0-5.42 4.42-9.84 9.86-9.84 5.42 0 9.84 4.42 9.84 9.86 0 5.42-4.42 9.84-9.84 9.84zm5.4-7.36c-.3-.16-1.76-.86-2.04-.96-.28-.1-.48-.16-.68.16-.2.3-.78.96-.96 1.16-.18.2-.36.22-.66.08-.3-.16-1.26-.46-2.4-1.48-.88-.78-1.48-1.76-1.66-2.06-.18-.3-.02-.46.14-.62.14-.14.3-.36.44-.54.16-.18.2-.3.3-.5.1-.2.06-.38-.02-.54-.08-.16-.68-1.64-.94-2.24-.24-.58-.5-.5-.68-.5h-.58c-.2 0-.52.06-.8.36-.28.3-1.04 1.02-1.04 2.5 0 1.46 1.06 2.88 1.22 3.08.16.2 2.1 3.2 5.08 4.5.7.3 1.26.48 1.7.62.7.22 1.36.2 1.86.12.58-.08 1.76-.72 2-1.42.26-.7.26-1.28.18-1.42-.08-.12-.28-.2-.58-.36z"/></svg>
+</a>
+
+<div id="legal-modal" class="legal-modal" hidden aria-hidden="true">
+  <div class="legal-modal-backdrop" data-legal-close tabindex="-1"></div>
+  <div class="legal-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title">
+    <div class="legal-modal-head">
+      <h2 id="legal-modal-title"></h2>
+      <button type="button" class="legal-modal-close" data-legal-close aria-label="סגירה">×</button>
+    </div>
+    <div class="legal-modal-body" id="legal-modal-body"></div>
+  </div>
+</div>
+
+<script src="../js/legal-content.js"></script>
+<script src="../js/a11y-widget.js"></script>
+<script src="../js/tori.js"></script>
+<script src="../js/delete-account.js"></script>
+
+</body>
+</html>
